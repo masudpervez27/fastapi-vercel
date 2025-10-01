@@ -142,11 +142,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: amondnet/vercel-action@v3
+      - uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
 ```
 
 Setting this up requires adding three secrets to your GitHub repository: your Vercel token, organization ID, and project ID. You can get these from your Vercel dashboard and the `.vercel/project.json` file that gets created when you link your project.

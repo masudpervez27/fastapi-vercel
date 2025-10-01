@@ -161,11 +161,12 @@ The repository includes a GitHub Actions workflow for automatic deployment to Ve
        runs-on: ubuntu-latest
        steps:
          - uses: actions/checkout@v4
-         - uses: amondnet/vercel-action@v3
+         - uses: amondnet/vercel-action@v25
            with:
              vercel-token: ${{ secrets.VERCEL_TOKEN }}
              vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
              vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+             vercel-args: '--prod'
    ```
 
 #### Benefits of Automated Deployment
