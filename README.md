@@ -4,7 +4,7 @@ A simple FastAPI application designed for deployment on Vercel, providing a REST
 
 ## 🚀 Features
 
-- **FastAPI Framework**: Modern, fast web framework for building APIs with Python
+- **FastAP## 🔧 ConfigurationModern, fast web framework for building APIs with Python
 - **Vercel Deployment**: Optimized for serverless deployment on Vercel
 - **Health Check Endpoint**: Built-in health monitoring endpoint
 - **Environment Configuration**: Configurable via environment variables
@@ -14,9 +14,6 @@ A simple FastAPI application designed for deployment on Vercel, providing a REST
 
 ```
 fastapi-vercel/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml  # GitHub Actions CI/CD workflow
 ├── app/
 │   └── api.py          # Main FastAPI application
 ├── main.py             # Local development server
@@ -109,11 +106,31 @@ Health check endpoint for monitoring application status.
 
 ## 🌐 Deployment on Vercel
 
-This application is configured for easy deployment on Vercel with both manual and automated deployment options.
+This application is optimized for deployment on Vercel with automatic Git integration.
 
-### Manual Deploy to Vercel
+### Vercel Project Configuration
 
-1. **Install Vercel CLI** (if not already installed)
+#### Method 1: Deploy via Vercel Dashboard (Recommended)
+
+1. **Go to [vercel.com](https://vercel.com) and sign up/login**
+
+2. **Import your project:**
+   - Click "New Project"
+   - Import from your GitHub repository
+   - Select `masudpervez27/fastapi-vercel`
+
+3. **Configure project settings:**
+   - **Framework Preset**: `Other`
+   - **Root Directory**: Leave empty (project is at repository root)
+   - **Build Command**: Leave empty (Vercel auto-detects from `vercel.json`)
+   - **Output Directory**: Leave empty
+   - **Install Command**: `pip install -r requirements.txt`
+
+4. **Deploy**: Click "Deploy" and your app will be live in minutes!
+
+#### Method 2: Deploy via Vercel CLI
+
+1. **Install Vercel CLI**
    ```bash
    npm install -g vercel
    ```
@@ -125,55 +142,27 @@ This application is configured for easy deployment on Vercel with both manual an
 
 3. **Deploy**
    ```bash
-   vercel
+   vercel --prod
    ```
 
-### Automated Deployment with GitHub Actions
+### Automatic Git Integration
 
-The repository includes a GitHub Actions workflow for automatic deployment to Vercel whenever you push to the main branch.
+Once your project is connected to Vercel:
 
-#### Setup GitHub Actions Deployment
+- **Automatic Deployments**: Every push to your main/master branch triggers a new deployment
+- **Preview Deployments**: Pull requests get their own preview URLs
+- **Zero Configuration**: No additional setup needed after initial connection
+- **Instant Rollbacks**: Easy to revert to previous deployments from Vercel dashboard
+- **Build Logs**: Detailed logs for troubleshooting deployment issues
 
-1. **Create GitHub Secrets**
-   Go to your repository settings → Secrets and variables → Actions, and add:
-   - `VERCEL_TOKEN`: Your Vercel API token (get from vercel.com/account/tokens)
-   - `VERCEL_ORG_ID`: Your Vercel organization ID
-   - `VERCEL_PROJECT_ID`: Your Vercel project ID
+### Vercel Project Settings
 
-2. **Get Vercel IDs**
-   ```bash
-   # Run this in your project directory after linking to Vercel
-   vercel link
-   # This creates a .vercel/project.json file with your project details
-   ```
+**Important Configuration Notes:**
 
-3. **GitHub Workflow**
-   The `.github/workflows/deploy.yml` file handles automatic deployment:
-   ```yaml
-   name: Deploy to Vercel
-
-   on:
-     push:
-       branches: [main]
-
-   jobs:
-     deploy:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v4
-         - uses: amondnet/vercel-action@v25
-           with:
-             vercel-token: ${{ secrets.VERCEL_TOKEN }}
-             vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-             vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-             vercel-args: '--prod'
-   ```
-
-#### Benefits of Automated Deployment
-- **Zero-downtime deployments**: Push to main branch and your app deploys automatically
-- **Version control**: Every deployment is tied to a specific commit
-- **Rollback capability**: Easy to revert to previous versions
-- **Team collaboration**: Multiple developers can deploy without manual coordination
+- **Root Directory**: Must be left empty since your project files are at the repository root
+- **Environment Variables**: Set these in Vercel dashboard under Settings → Environment Variables
+- **Custom Domains**: Configure under Settings → Domains
+- **Build & Output Settings**: Handled automatically by `vercel.json`
 
 ### Deployment Configuration
 
@@ -208,17 +197,16 @@ This project includes automated deployment using GitHub Actions. Every push to t
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | Server port number | `8000` |
+| Variable | Description | Default | Where to Set |
+|----------|-------------|---------|--------------|
+| `PORT` | Server port number | `8000` | Local: `.env` file, Vercel: Dashboard Settings |
 
-### GitHub Secrets (for CI/CD)
+### Vercel Environment Variables
 
-| Secret | Description | How to Get |
-|--------|-------------|------------|
-| `VERCEL_TOKEN` | Vercel API token | vercel.com/account/tokens |
-| `VERCEL_ORG_ID` | Organization ID | Found in .vercel/project.json after `vercel link` |
-| `VERCEL_PROJECT_ID` | Project ID | Found in .vercel/project.json after `vercel link` |
+Set environment variables in your Vercel project dashboard:
+1. Go to your project dashboard on Vercel
+2. Navigate to **Settings → Environment Variables**
+3. Add your variables for different environments (Production, Preview, Development)
 
 ### Dependencies
 
